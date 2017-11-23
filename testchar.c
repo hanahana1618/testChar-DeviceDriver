@@ -14,7 +14,7 @@ static struct file_operations fops = {
    .release = dev_release
 };
  
-static int __init testchar_init(void){ 
+static int __init testchar_init(void) { 
 	//save major number
    major = register_chrdev(0, DEVICE_NAME, &fops);
    if (major<0){
@@ -43,7 +43,7 @@ static int __init testchar_init(void){
    printk(KERN_INFO "TestChar: device class created correctly\n"); 
 
    //lock mutex when the device driver is init
-   mutex_lock(&testcharMutex);
+   mutex_init(&testcharMutex);
 
    return 0;
 }
