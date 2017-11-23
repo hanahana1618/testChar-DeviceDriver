@@ -90,7 +90,7 @@ static int dev_open(struct inode *inodep, struct file *filep){
  
 static ssize_t dev_read(struct file *filep, char *buffer, size_t len, loff_t *offset){
    int errorCount = 0;
-   errorCount = copy_to_user(buffer, message, sizeMssg);x
+   errorCount = copy_to_user(buffer, message, sizeMssg);
  
    if (errorCount==0){           
       printk(KERN_INFO "TestChar: Sent %d characters to the user\n", sizeMssg);
