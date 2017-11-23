@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) { //just because CS50 was very annoying about t
 	char buff[BUFF_LEN];
 	
 	if (strcmp(argv[0], "./tester")) {
-		//wordNumber = argc - 1;
+		
 		printf("Argc value: %d\n", argc);
 		return -1;
 	}	
@@ -47,32 +47,6 @@ int main(int argc, char *argv[]) { //just because CS50 was very annoying about t
 	}
 	printf("Your sentence and its size are (including spaces): [%s]\n", retBuff);
 	
-	//int i;
-	//int count = argc;
-	//char *buff[strlen(argv(1))+1];
-	//printf("Count value: %d\n", count);
-	//strcpy(buff, argv[0]);
-	//for (i=1; i<count; i++) {
-	//	strncat(buff, argv[i], strlen(argv[i]));
-	//	strncat(buff, " ", strlen(" "));
-	//	malloc();
-		//write(fhandler, argv[i], strlen(argv[1]));
-		//write(fhandler, " ", strlen(" "));
-		//printf("String successfully sent to device\n");
-	//}
-	
-	
-	//printf("Entire string: %s\n", buff);
-	//printf("Size of string: %ld", sizeof(buff));
-
-	//
-
-	//free(buff);
-/*
-
-	write(fhandler, buff, strlen());
-
-*/
 
 	//program ran correctly
 	return 0;
