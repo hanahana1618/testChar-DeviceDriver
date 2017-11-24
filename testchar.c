@@ -43,14 +43,16 @@ static int __init testchar_init(void) {
    printk(KERN_INFO "TestChar: device class created correctly\n"); 
 
    //lock mutex when the device driver is init
-   mutex_init(&testcharMutex);
+   mutex_lock(&testcharMutex);
 
    return 0;
 }
  
 static int dev_open(struct inode *inodep, struct file *filep){
 	//book code: struct dev
-   //derek implemented !mutex_trylock
+
+   //mutex_init(&testcharMutex);
+
    if (!mutex_is_locked(&testcharMutex)) {
       //print this to user space, not kernel log
       printk("Cannot Access the Device Driver TestChar because another process is using it.\n");
@@ -90,6 +92,7 @@ static int dev_release(struct inode *inodep, struct file *filep) {
 
    //unlock the mutex so that another use can have it
    mutex_unlock(&testcharMutex);
+   mutex_destroy(&testcharMutex);
 
    //debugging for make-believe hardware and mutex unlocked
    printk(KERN_INFO "TestChar: Device has been successfully closed\n");
