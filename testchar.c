@@ -53,7 +53,7 @@ static int dev_open(struct inode *inodep, struct file *filep){
 
    //mutex_init(&testcharMutex);
 
-   if (mutex_is_locked(&testcharMutex)) {
+   if (!mutex_trylock(&testcharMutex)) {
       //print this to user space, not kernel log
       printk("Cannot Access the Device Driver TestChar because another process is using it.\n");
       //return something here
