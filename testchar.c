@@ -19,7 +19,7 @@ static int __init testchar_init(void) {
    major = register_chrdev(0, DEVICE_NAME, &fops);
    if (major<0){
       printk(KERN_ALERT "TestChar failed to register major number\n");
-      return -1; //is this error number valid?
+      return major; 
    }
    printk(KERN_INFO "TestChar: registered a major number %d\n", major);
  
@@ -43,7 +43,7 @@ static int __init testchar_init(void) {
    printk(KERN_INFO "TestChar: device class created correctly\n"); 
 
    //lock mutex when the device driver is init
-   mutex_lock(&testcharMutex);
+   mutex_init(&testcharMutex);
 
    return 0;
 }
@@ -53,7 +53,7 @@ static int dev_open(struct inode *inodep, struct file *filep){
 
    //mutex_init(&testcharMutex);
 
-   if (!mutex_is_locked(&testcharMutex)) {
+   if (mutex_is_locked(&testcharMutex)) {
       //print this to user space, not kernel log
       printk("Cannot Access the Device Driver TestChar because another process is using it.\n");
       //return something here
@@ -74,7 +74,7 @@ static ssize_t dev_read(struct file *filep, char *buffer, size_t len, loff_t *of
    }
    else {
       printk(KERN_INFO "TestChar: Failed to send %d characters to the user\n", errorCount);
-      return -2;            
+      return -EFAULT;            
    }
 }
  
@@ -92,7 +92,7 @@ static int dev_release(struct inode *inodep, struct file *filep) {
 
    //unlock the mutex so that another use can have it
    mutex_unlock(&testcharMutex);
-   mutex_destroy(&testcharMutex);
+   //mutex_destroy(&testcharMutex);
 
    //debugging for make-believe hardware and mutex unlocked
    printk(KERN_INFO "TestChar: Device has been successfully closed\n");
